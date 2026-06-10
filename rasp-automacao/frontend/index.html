@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Rasp Automação — Especializada em automação industrial, montagem de painéis elétricos, instalações elétricas e projetos industriais. Entre em contato conosco." />
+  <meta name="keywords" content="automação industrial, painéis elétricos, instalações elétricas, CLP, IHM, projetos elétricos, São Paulo" />
+  <meta name="author" content="Rasp Automação" />
+  <meta property="og:title" content="Rasp Automação — Automação Industrial e Elétrica" />
+  <meta property="og:description" content="Soluções completas em automação industrial, instalações elétricas, montagem de painéis e programação de CLPs." />
+  <meta property="og:type" content="website" />
+  <title>Rasp Automação — Automação Industrial e Elétrica</title>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css?v=2" />
+</head>
+<body>
+
+  <!-- ========================================================
+       HEADER / NAVEGAÇÃO
+  ======================================================== -->
+  <header class="header" id="header" role="banner">
+    <nav class="nav container" aria-label="Navegação principal">
+      <!-- Logo -->
+      <a href="#inicio" class="nav__logo" aria-label="Rasp Automação — Início">
+        <svg class="logo-svg" viewBox="0 0 230 85" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Anel Orbital Atrás do R -->
+          <path d="M 10 38 C -4 20, 16 11, 45 18 C 55 21, 57 27, 52 32" fill="none" stroke="#C1272D" stroke-width="3" stroke-linecap="round" />
+          
+          <!-- Texto RASP -->
+          <text x="14" y="44" font-family="'Inter', sans-serif" font-weight="900" font-style="italic" font-size="44" fill="#C1272D" letter-spacing="-1.5">Rasp</text>
+
+          <!-- Parte da Frente do Anel Orbital (passando na frente da perna do R) -->
+          <path d="M 52 32 C 46 38, 22 45, 10 38" fill="none" stroke="#C1272D" stroke-width="3" stroke-linecap="round" />
+
+          <!-- Linha vermelha com onda e plugue -->
+          <path d="M 14 55 L 175 55 Q 180 47, 185 55 T 195 55" fill="none" stroke="#C1272D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          
+          <!-- Corpo do Plugue -->
+          <rect x="195" y="50" width="12" height="10" rx="2.5" fill="#C1272D" />
+          <!-- Pinos do Plugue -->
+          <rect x="207" y="52" width="5" height="2" rx="0.5" fill="#C1272D" />
+          <rect x="207" y="56" width="5" height="2" rx="0.5" fill="#C1272D" />
+
+          <!-- Texto "automação" com "o" estilizado como tomada -->
+          <text x="65" y="76" font-family="'Inter', sans-serif" font-weight="800" font-style="italic" font-size="19" fill="#E67E22" letter-spacing="0.5">automaçã</text>
+          
+          <!-- Letra "o" como tomada -->
+          <g transform="translate(170, 62)" fill="none" stroke="#E67E22" stroke-width="2.2">
+            <!-- Círculo externo do 'o' (formato levemente quadrado e inclinado/itálico) -->
+            <rect x="0" y="0" width="14" height="14" rx="3.5" transform="skewX(-10)" />
+            <!-- Dois pontos da tomada -->
+            <circle cx="4.5" cy="7" r="1.1" fill="#E67E22" stroke="none" />
+            <circle cx="9.5" cy="7" r="1.1" fill="#E67E22" stroke="none" stroke-width="0" />
+          </g>
+        </svg>
+        <span class="logo-text">
+          <span class="logo-text__main">Rasp</span>
+          <span class="logo-text__sub">automação</span>
+        </span>
+      </a>
+
+      <!-- Menu Desktop -->
+      <ul class="nav__menu" id="nav-menu" role="list">
+        <li><a href="#quem-somos" class="nav__link" id="nav-quem-somos">Quem Somos</a></li>
+        <li><a href="#servicos" class="nav__link" id="nav-servicos">Serviços</a></li>
+        <li><a href="#contato" class="nav__link" id="nav-contato">Contato</a></li>
+      </ul>
+
+      <!-- Botão WhatsApp -->
+      <a
+        href="https://wa.me/5511963987438"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn--whatsapp"
+        id="whatsapp-btn"
+        aria-label="Fale pelo WhatsApp: 11 96398-7438"
+      >
+        <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        <span class="whatsapp-number">11 96398-7438</span>
+      </a>
+
+      <!-- Botão hamburguer (mobile) -->
+      <button class="nav__toggle" id="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-menu">
+        <span class="hamburger"></span>
+        <span class="hamburger"></span>
+        <span class="hamburger"></span>
+      </button>
+    </nav>
+  </header>
+
+  <main id="conteudo-principal">
+
+    <!-- ========================================================
+         HERO SECTION
+    ======================================================== -->
+    <section class="hero" id="inicio" aria-label="Banner principal">
+      <div class="hero__overlay" aria-hidden="true"></div>
+      <div class="hero__bg" aria-hidden="true"></div>
+
+      <div class="container hero__content">
+        <div class="hero__badge" aria-hidden="true">
+          <span class="badge-dot"></span>
+          Especialistas em Automação
+        </div>
+        <h1 class="hero__title">
+          Automação de<br />
+          <span class="hero__title--accent">Máquinas</span> e<br />
+          <span class="hero__title--accent">Processos</span>
+        </h1>
+        <p class="hero__subtitle">
+          Transformamos indústrias com soluções inteligentes em automação,
+          painéis elétricos e instalações de alto desempenho.
+        </p>
+        <div class="hero__actions">
+          <a href="#contato" class="btn btn--primary" id="hero-cta">
+            Fale Conosco
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#servicos" class="btn btn--outline" id="hero-servicos">
+            Nossos Serviços
+          </a>
+        </div>
+
+        <!-- Stats -->
+        <div class="hero__stats" aria-label="Estatísticas da empresa">
+          <div class="stat">
+            <span class="stat__number">+10</span>
+            <span class="stat__label">Anos de experiência</span>
+          </div>
+          <div class="stat__divider" aria-hidden="true"></div>
+          <div class="stat">
+            <span class="stat__number">6</span>
+            <span class="stat__label">Especialidades</span>
+          </div>
+          <div class="stat__divider" aria-hidden="true"></div>
+          <div class="stat">
+            <span class="stat__number">100%</span>
+            <span class="stat__label">Conformidade ABNT</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll indicator -->
+      <a href="#quem-somos" class="hero__scroll" aria-label="Rolar para baixo">
+        <div class="scroll-indicator" aria-hidden="true">
+          <div class="scroll-dot"></div>
+        </div>
+      </a>
+    </section>
+
+    <!-- ========================================================
+         SEÇÃO: QUEM SOMOS
+    ======================================================== -->
+    <section class="section quem-somos" id="quem-somos" aria-labelledby="titulo-quem-somos">
+      <div class="container">
+        <div class="quem-somos__grid">
+          <!-- Lado do texto -->
+          <div class="quem-somos__text">
+            <span class="section-badge">Nossa História</span>
+            <h2 class="section-title" id="titulo-quem-somos">Quem <span class="text-accent">Somos</span></h2>
+            <p class="quem-somos__desc">
+              A <strong>Rasp Automação</strong> é uma empresa especializada nas áreas de
+              <strong>instalações elétricas</strong>, <strong>automação industrial</strong>,
+              <strong>montagem de painéis elétricos</strong> e <strong>projetos industriais</strong>.
+            </p>
+            <p class="quem-somos__desc">
+              Com uma equipe técnica altamente qualificada e comprometida com a excelência,
+              entregamos soluções que otimizam processos, aumentam a produtividade e garantem
+              a segurança das operações industriais dos nossos clientes.
+            </p>
+            <ul class="quem-somos__pilares" role="list">
+              <li class="pilar">
+                <svg class="pilar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Conformidade com normas ABNT, NR-10 e IEC
+              </li>
+              <li class="pilar">
+                <svg class="pilar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                Atendimento ágil e soluções personalizadas
+              </li>
+              <li class="pilar">
+                <svg class="pilar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                Equipe técnica certificada e experiente
+              </li>
+            </ul>
+          </div>
+
+          <!-- Lado do visual (metáfora: ideia + automação) -->
+          <div class="quem-somos__visual" aria-hidden="true">
+            <div class="visual-card">
+              <!-- Reinterpretação moderna da metáfora lâmpada + braço robótico -->
+              <svg class="visual-icon" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="Ícone de automação industrial">
+                <!-- Círculo de fundo -->
+                <circle cx="100" cy="100" r="90" fill="url(#grad1)" opacity="0.15"/>
+                <!-- Lâmpada estilizada -->
+                <ellipse cx="100" cy="80" rx="30" ry="32" fill="none" stroke="#C1272D" stroke-width="3" opacity="0.8"/>
+                <path d="M84 112 h32" stroke="#C1272D" stroke-width="3" stroke-linecap="round"/>
+                <path d="M87 118 h26" stroke="#C1272D" stroke-width="3" stroke-linecap="round"/>
+                <path d="M91 124 h18" stroke="#C1272D" stroke-width="3" stroke-linecap="round"/>
+                <line x1="100" y1="48" x2="100" y2="40" stroke="#C1272D" stroke-width="3" stroke-linecap="round"/>
+                <line x1="72" y1="55" x2="66" y2="49" stroke="#C1272D" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+                <line x1="128" y1="55" x2="134" y2="49" stroke="#C1272D" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+                <!-- Engrenagem -->
+                <g transform="translate(100,85)" opacity="0.6">
+                  <circle cx="0" cy="0" r="12" fill="none" stroke="#EAEAEA" stroke-width="2"/>
+                  <circle cx="0" cy="0" r="4" fill="#C1272D"/>
+                  <rect x="-3" y="-16" width="6" height="8" rx="2" fill="#EAEAEA"/>
+                  <rect x="-3" y="8" width="6" height="8" rx="2" fill="#EAEAEA"/>
+                  <rect x="-16" y="-3" width="8" height="6" rx="2" fill="#EAEAEA"/>
+                  <rect x="8" y="-3" width="8" height="6" rx="2" fill="#EAEAEA"/>
+                </g>
+                <!-- Braço robótico estilizado -->
+                <path d="M60 155 L80 140 L100 148 L120 130 L140 140" fill="none" stroke="#C1272D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+                <circle cx="60" cy="155" r="5" fill="#C1272D" opacity="0.7"/>
+                <circle cx="140" cy="140" r="5" fill="#C1272D" opacity="0.7"/>
+                <defs>
+                  <radialGradient id="grad1" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" style="stop-color:#C1272D;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#C1272D;stop-opacity:0" />
+                  </radialGradient>
+                </defs>
+              </svg>
+              <div class="visual-card__label">
+                <span class="label-icon">💡</span>
+                Inovação + Automação
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SEÇÃO: NOSSOS SERVIÇOS
+    ======================================================== -->
+    <section class="section servicos" id="servicos" aria-labelledby="titulo-servicos">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">O que fazemos</span>
+          <h2 class="section-title" id="titulo-servicos">Nossos <span class="text-accent">Serviços</span></h2>
+          <p class="section-desc">
+            Soluções completas para sua indústria, do projeto à execução,
+            com qualidade técnica e conformidade normativa.
+          </p>
+        </div>
+
+        <!-- Estado de loading -->
+        <div class="servicos__loading" id="servicos-loading" aria-live="polite" aria-busy="true">
+          <div class="loading-spinner" aria-hidden="true"></div>
+          <p>Carregando serviços...</p>
+        </div>
+
+        <!-- Estado de erro -->
+        <div class="servicos__error hidden" id="servicos-error" role="alert">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <p>Não foi possível carregar os serviços. Verifique se o servidor está online.</p>
+        </div>
+
+        <!-- Grid de Cards (populado via JS) -->
+        <div class="servicos__grid" id="servicos-grid" role="list" aria-label="Lista de serviços"></div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         SEÇÃO: CONTATO
+    ======================================================== -->
+    <section class="section contato" id="contato" aria-labelledby="titulo-contato">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Fale Conosco</span>
+          <h2 class="section-title" id="titulo-contato">Entre em <span class="text-accent">Contato</span></h2>
+          <p class="section-desc">
+            Pronto para modernizar sua operação? Nossa equipe técnica está à disposição.
+          </p>
+        </div>
+
+        <div class="contato__grid">
+          <!-- Formulário -->
+          <div class="contato__form-wrapper">
+            <form class="form" id="contato-form" novalidate aria-label="Formulário de contato">
+              <div class="form__row">
+                <div class="form__group">
+                  <label for="nome" class="form__label">Nome <span class="required" aria-hidden="true">*</span></label>
+                  <input
+                    type="text"
+                    id="nome"
+                    name="nome"
+                    class="form__input"
+                    placeholder="Seu nome completo"
+                    autocomplete="name"
+                    required
+                    aria-required="true"
+                  />
+                  <span class="form__error" id="erro-nome" role="alert"></span>
+                </div>
+                <div class="form__group">
+                  <label for="email" class="form__label">E-mail <span class="required" aria-hidden="true">*</span></label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    class="form__input"
+                    placeholder="seu@email.com"
+                    autocomplete="email"
+                    required
+                    aria-required="true"
+                  />
+                  <span class="form__error" id="erro-email" role="alert"></span>
+                </div>
+              </div>
+
+              <div class="form__row">
+                <div class="form__group">
+                  <label for="telefone" class="form__label">Telefone / WhatsApp</label>
+                  <input
+                    type="tel"
+                    id="telefone"
+                    name="telefone"
+                    class="form__input"
+                    placeholder="(11) 99999-9999"
+                    autocomplete="tel"
+                    maxlength="15"
+                  />
+                </div>
+                <div class="form__group">
+                  <label for="assunto" class="form__label">Assunto</label>
+                  <input
+                    type="text"
+                    id="assunto"
+                    name="assunto"
+                    class="form__input"
+                    placeholder="Ex: Projeto de automação"
+                  />
+                </div>
+              </div>
+
+              <div class="form__group">
+                <label for="mensagem" class="form__label">Mensagem <span class="required" aria-hidden="true">*</span></label>
+                <textarea
+                  id="mensagem"
+                  name="mensagem"
+                  class="form__input form__textarea"
+                  placeholder="Descreva sua necessidade..."
+                  rows="5"
+                  required
+                  aria-required="true"
+                ></textarea>
+                <span class="form__error" id="erro-mensagem" role="alert"></span>
+              </div>
+
+              <button type="submit" class="btn btn--primary btn--full" id="btn-enviar">
+                <span class="btn__text">Enviar Mensagem</span>
+                <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+              </button>
+
+              <!-- Feedback de envio -->
+              <div class="form__feedback hidden" id="form-feedback" role="alert" aria-live="polite"></div>
+            </form>
+          </div>
+
+          <!-- Informações de contato -->
+          <aside class="contato__info" aria-label="Informações de contato">
+            <h3 class="contato__info-title">Informações de Contato</h3>
+
+            <div class="info-card">
+              <div class="info-card__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.0 1.17 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+              </div>
+              <div class="info-card__content">
+                <span class="info-card__label">Telefone / WhatsApp</span>
+                <a href="https://wa.me/5511963987438" class="info-card__value" target="_blank" rel="noopener noreferrer">(11) 96398-7438</a>
+              </div>
+            </div>
+
+            <div class="info-card">
+              <div class="info-card__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div class="info-card__content">
+                <span class="info-card__label">E-mail</span>
+                <a href="mailto:contato@raspautomacao.com.br" class="info-card__value">contato@raspautomacao.com.br</a>
+              </div>
+            </div>
+
+            <div class="info-card">
+              <div class="info-card__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div class="info-card__content">
+                <span class="info-card__label">Horário de Atendimento</span>
+                <span class="info-card__value">Seg–Sex: 08h às 18h</span>
+              </div>
+            </div>
+
+            <!-- WhatsApp direto -->
+            <a
+              href="https://wa.me/5511963987438?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20serviços%20da%20Rasp%20Automação."
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn--whatsapp btn--full"
+              id="contato-whatsapp"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Chamar no WhatsApp
+            </a>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================
+       FOOTER
+  ======================================================== -->
+  <footer class="footer" role="contentinfo">
+    <div class="container footer__content">
+      <div class="footer__brand">
+        <span class="footer__logo">Rasp <span class="text-accent">Automação</span></span>
+        <p class="footer__tagline">Automação de Máquinas e Processos</p>
+      </div>
+      <nav class="footer__nav" aria-label="Links rápidos do rodapé">
+        <a href="#quem-somos" class="footer__link">Quem Somos</a>
+        <a href="#servicos" class="footer__link">Serviços</a>
+        <a href="#contato" class="footer__link">Contato</a>
+      </nav>
+      <p class="footer__copy">
+        &copy; <span id="footer-year"></span> Rasp Automação — Todos os direitos reservados.
+      </p>
+    </div>
+  </footer>
+
+  <!-- ========================================================
+       MODAL DE SERVIÇO
+  ======================================================== -->
+  <div class="modal-overlay hidden" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-titulo" aria-hidden="true">
+    <div class="modal">
+      <button class="modal__close" id="modal-close" aria-label="Fechar modal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="modal__header">
+        <div class="modal__icon-wrapper" id="modal-icon" aria-hidden="true"></div>
+        <h3 class="modal__title" id="modal-titulo"></h3>
+      </div>
+      <div class="modal__body">
+        <p class="modal__descricao" id="modal-descricao"></p>
+      </div>
+      <div class="modal__footer">
+        <a href="#contato" class="btn btn--primary" id="modal-cta" onclick="document.getElementById('modal-overlay').classList.add('hidden'); document.getElementById('modal-overlay').setAttribute('aria-hidden','true');">
+          Solicitar Orçamento
+        </a>
+        <button class="btn btn--ghost" id="modal-fechar-btn">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

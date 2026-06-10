@@ -1,0 +1,21 @@
+# Ignorar arquivos sensíveis e desnecessários
+
+# Variáveis de ambiente reais
+backend/.env
+
+# Dependências Node.js
+backend/node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
