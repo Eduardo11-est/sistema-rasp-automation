@@ -186,7 +186,7 @@ function toggleVisibility(el, visible) {
     card.className = 'servico-card';
     card.setAttribute('role', 'listitem');
     card.setAttribute('tabindex', '0');
-    card.setAttribute('aria-label', `Serviço: ${servico.titulo}. Clique para ver mais detalhes.`);
+    card.setAttribute('aria-label', `Solicitar orçamento para o serviço: ${servico.titulo}.`);
     card.style.animationDelay = `${index * 80}ms`;
 
     const iconeSVG = SERVICO_ICONS[servico.id] || ICON_DEFAULT;
@@ -196,17 +196,21 @@ function toggleVisibility(el, visible) {
       <h3 class="servico-card__titulo">${escapeHTML(servico.titulo)}</h3>
       <p class="servico-card__desc">${escapeHTML(servico.descricao_curta)}</p>
       <span class="servico-card__cta">
-        Ver detalhes
+        Solicitar Orçamento
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </span>
     `;
 
-    // Click e teclado para abrir modal
-    card.addEventListener('click', () => abrirModal(servico));
+    // Redireciona diretamente para o formulário de orçamentos do cliente
+    const irParaOrcamento = () => {
+      window.location.href = `solicitar-orcamento.html?servico=${encodeURIComponent(servico.titulo)}`;
+    };
+
+    card.addEventListener('click', irParaOrcamento);
     card.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        abrirModal(servico);
+        irParaOrcamento();
       }
     });
 

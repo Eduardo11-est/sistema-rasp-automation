@@ -1,0 +1,269 @@
+/* ============================================================
+   Rasp Automação — CSS do Formulário de Solicitação
+   ============================================================ */
+
+.header--static {
+  position: relative;
+  background: var(--color-bg-2);
+}
+
+.orcamento-page {
+  background: var(--color-bg);
+  padding: var(--space-12) 0 var(--space-20);
+}
+
+.orcamento-header {
+  text-align: center;
+  margin-bottom: var(--space-12);
+}
+
+.orcamento-title {
+  font-size: var(--font-size-4xl);
+  font-weight: 800;
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
+
+.orcamento-subtitle {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-muted);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.orcamento-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.form-orcamento {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-10);
+  box-shadow: var(--shadow-lg);
+}
+
+.form-section {
+  margin-bottom: var(--space-10);
+  padding-bottom: var(--space-8);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.form-section:nth-last-child(2) {
+  border-bottom: none;
+  margin-bottom: var(--space-6);
+}
+
+.form-section-title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-6);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+
+@media (min-width: 640px) {
+  .form-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.form-label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.form-input,
+.form-textarea {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  background: var(--color-bg-2);
+  box-shadow: 0 0 0 4px var(--color-primary-glow);
+}
+
+.form-input.invalid,
+.form-textarea.invalid {
+  border-color: var(--color-error);
+}
+
+.form-textarea {
+  resize: vertical;
+}
+
+.error-msg {
+  font-size: var(--font-size-xs);
+  color: var(--color-error);
+  font-weight: 500;
+  min-height: 16px;
+}
+
+/* Services checkbox grid */
+.services-checkbox-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .services-checkbox-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.service-option {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: border-color var(--transition-base), background var(--transition-base), box-shadow var(--transition-base);
+  user-select: none;
+}
+
+.service-option:hover {
+  border-color: var(--color-border-hover);
+  background: var(--color-bg-card-hover);
+}
+
+.service-option.checked {
+  border-color: var(--color-primary);
+  background: var(--color-primary-glow);
+}
+
+.service-option input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.custom-checkbox {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--color-text-muted);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: all var(--transition-fast);
+}
+
+.service-option.checked .custom-checkbox {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.custom-checkbox svg {
+  width: 12px;
+  height: 12px;
+  display: none;
+}
+
+.service-option.checked .custom-checkbox svg {
+  display: block;
+}
+
+.service-option-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.service-option-title {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.service-option-desc {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+/* Services Loading State */
+.services-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-8) 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Feedback message */
+.form-feedback {
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  margin-bottom: var(--space-5);
+  line-height: 1.5;
+  animation: fadeIn 0.3s ease;
+}
+
+.form-feedback.success {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: var(--color-success);
+}
+
+.form-feedback.error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: var(--color-error);
+}
+
+.form-feedback a {
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+/* Button override */
+.btn--lg.btn--full {
+  padding: var(--space-4);
+  font-size: var(--font-size-base);
+}
