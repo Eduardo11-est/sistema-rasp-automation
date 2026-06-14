@@ -1,0 +1,20 @@
+{
+  "name": "sistema-rasp-automation",
+  "version": "1.0.0",
+  "description": "Monorepo para o sistema Rasp Automação — Integrado para Vercel",
+  "main": "api/index.js",
+  "scripts": {
+    "start": "node rasp-automacao/backend/server.js",
+    "dev": "nodemon rasp-automacao/backend/server.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.108.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "pg": "^8.12.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}

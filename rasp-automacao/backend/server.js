@@ -54,13 +54,17 @@ app.use((err, req, res, next) => {
 // ============================================================
 //  Inicialização do Servidor
 // ============================================================
-app.listen(PORT, () => {
-  console.log('');
-  console.log('╔═══════════════════════════════════════════╗');
-  console.log('║   🔌 Rasp Automação — Backend API         ║');
-  console.log(`║   🚀 Servidor rodando na porta ${PORT}        ║`);
-  console.log(`║   🌐 http://localhost:${PORT}               ║`);
-  console.log(`║   📡 API:  http://localhost:${PORT}/api      ║`);
-  console.log('╚═══════════════════════════════════════════╝');
-  console.log('');
-});
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log('');
+    console.log('╔═══════════════════════════════════════════╗');
+    console.log('║   🔌 Rasp Automação — Backend API         ║');
+    console.log(`║   🚀 Servidor rodando na porta ${PORT}        ║`);
+    console.log(`║   🌐 http://localhost:${PORT}               ║`);
+    console.log(`║   📡 API:  http://localhost:${PORT}/api      ║`);
+    console.log('╚═══════════════════════════════════════════╝');
+    console.log('');
+  });
+}
+
+module.exports = app;

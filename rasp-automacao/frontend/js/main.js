@@ -18,8 +18,10 @@
 //  CONFIGURAÇÃO
 // ============================================================
 
-/** URL base da API backend. Altere em produção. */
-const API_BASE_URL = 'http://localhost:3000/api';
+/** URL base da API backend. Detecta automaticamente se está rodando localmente ou na Vercel. */
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:3000/api'
+  : '/api';
 
 /** Ícones SVG por índice de serviço (1-based) */
 const SERVICO_ICONS = {
