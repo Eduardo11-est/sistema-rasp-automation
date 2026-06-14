@@ -1,4 +1,4 @@
-const pool = require('../config/db');
+const supabase = require('../config/supabase');
 const store = require('../data/store');
 
 const criarContato = async (req, res) => {
@@ -24,29 +24,40 @@ const criarContato = async (req, res) => {
     });
   }
 
-  try {
-    const resultado = await pool.query(
-      `INSERT INTO contatos (nome, email, telefone, assunto, mensagem)
-       VALUES ($1, $2, $3, $4, $5)
-       RETURNING id, nome, email, criado_em`,
-      [
-        nome.trim(),
-        email.trim().toLowerCase(),
-        telefone ? telefone.trim() : null,
-        assunto ? assunto.trim() : null,
-        mensagem.trim(),
-      ]
-    );
-    console.log(`📩 Novo contato recebido de: ${resultado.rows[0].nome} <${resultado.rows[0].email}>`);
+  if (!supabase) {
+    console.warn('Supabase desabilitado, salvando contato em memória');
+    const contato = store.criarContato({ nome, email, telefone, assunto, mensagem });
     return res.status(201).json({
       sucesso: true,
       mensagem: 'Mensagem recebida com sucesso! Entraremos em contato em breve.',
-      dados: resultado.rows[0],
+      dados: { id: contato.id, nome: contato.nome, email: contato.email, criado_em: contato.criado_em },
+    });
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('contatos')
+      .insert({
+        nome: nome.trim(),
+        email: email.trim().toLowerCase(),
+        telefone: telefone ? telefone.trim() : null,
+        assunto: assunto ? assunto.trim() : null,
+        mensagem: mensagem.trim(),
+      })
+      .select('id, nome, email, criado_em')
+      .single();
+
+    if (error) throw error;
+
+    console.log(`📩 Novo contato recebido de: ${data.nome} <${data.email}>`);
+    return res.status(201).json({
+      sucesso: true,
+      mensagem: 'Mensagem recebida com sucesso! Entraremos em contato em breve.',
+      dados: data,
     });
   } catch (erro) {
-    console.warn('Banco indisponível, salvando contato em memória:', erro.message);
+    console.warn('Erro ao salvar no Supabase, salvando em memória:', erro.message);
     const contato = store.criarContato({ nome, email, telefone, assunto, mensagem });
-    console.log(`📩 Novo contato recebido (memória): ${contato.nome} <${contato.email}>`);
     return res.status(201).json({
       sucesso: true,
       mensagem: 'Mensagem recebida com sucesso! Entraremos em contato em breve.',
@@ -56,17 +67,31 @@ const criarContato = async (req, res) => {
 };
 
 const listarContatos = async (req, res) => {
-  try {
-    const resultado = await pool.query(
-      'SELECT id, nome, email, telefone, assunto, criado_em FROM contatos ORDER BY criado_em DESC'
-    );
+  if (!supabase) {
+    console.warn('Supabase desabilitado, listando contatos em memória');
+    const dados = store.listarContatos();
     return res.status(200).json({
       sucesso: true,
-      total: resultado.rowCount,
-      dados: resultado.rows,
+      total: dados.length,
+      dados,
+    });
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('contatos')
+      .select('id, nome, email, telefone, assunto, criado_em')
+      .order('criado_em', { ascending: false });
+
+    if (error) throw error;
+
+    return res.status(200).json({
+      sucesso: true,
+      total: data.length,
+      dados: data,
     });
   } catch (erro) {
-    console.warn('Banco indisponível, listando contatos da memória:', erro.message);
+    console.warn('Erro ao consultar Supabase, listando da memória:', erro.message);
     const dados = store.listarContatos();
     return res.status(200).json({
       sucesso: true,

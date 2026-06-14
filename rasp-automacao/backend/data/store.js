@@ -110,4 +110,20 @@ function buscarOrcamentoPorId(id) {
   return orcamentos.find(o => o.id === id) || null;
 }
 
-module.exports = { listarServicos, buscarServicoPorId, criarContato, listarContatos, criarOrcamento, listarOrcamentos, buscarOrcamentoPorId };
+function atualizarStatusOrcamento(id, status) {
+  const orc = orcamentos.find(o => o.id === id);
+  if (!orc) return null;
+  orc.status = status;
+  return orc;
+}
+
+module.exports = { 
+  listarServicos, 
+  buscarServicoPorId, 
+  criarContato, 
+  listarContatos, 
+  criarOrcamento, 
+  listarOrcamentos, 
+  buscarOrcamentoPorId,
+  atualizarStatusOrcamento
+};

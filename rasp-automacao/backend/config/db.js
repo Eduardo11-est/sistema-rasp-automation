@@ -24,6 +24,7 @@ if (USE_DATABASE) {
         database: process.env.DB_NAME     || 'rasp_automacao',
         connectionTimeoutMillis: 5000,
         idleTimeoutMillis: 10000,
+        ssl:      process.env.DB_SSL === 'true' || (process.env.DB_HOST && !['localhost', '127.0.0.1'].includes(process.env.DB_HOST)) ? { rejectUnauthorized: false } : false,
       };
 
   pool = new Pool(poolConfig);

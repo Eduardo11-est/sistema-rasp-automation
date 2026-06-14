@@ -1,10 +1,6 @@
-// ============================================================
-//  controllers/orcamentosController.js — Orçamentos da Rasp Automação
-// ============================================================
-const pool  = require('../config/db');
+const supabase = require('../config/supabase');
 const store = require('../data/store');
 
-// ── Criar Orçamento ─────────────────────────────────────────
 const criarOrcamento = async (req, res) => {
   const {
     numero, cliente_nome, cliente_empresa, cliente_telefone,
@@ -18,93 +14,129 @@ const criarOrcamento = async (req, res) => {
     });
   }
 
-  // Calcula total
   const total = itens.reduce((acc, item) => {
     return acc + (parseFloat(item.quantidade) || 1) * (parseFloat(item.valor_unitario) || 0);
   }, 0);
 
-  const client = await pool.connect().catch(() => null);
-
-  if (!client) {
-    // Fallback em memória
+  if (!supabase) {
+    console.warn('Supabase desabilitado, salvando orçamento em memória');
     const orc = store.criarOrcamento({ numero, cliente_nome, cliente_empresa, cliente_telefone, cliente_email, data_validade, condicao_pagto, observacoes, itens, total });
     return res.status(201).json({ sucesso: true, mensagem: 'Orçamento salvo com sucesso!', dados: orc });
   }
-
   try {
-    await client.query('BEGIN');
+    const { data: orcData, error: orcError } = await supabase
+      .from('orcamentos')
+      .insert({
+        numero: numero.trim(),
+        cliente_nome: cliente_nome.trim(),
+        cliente_empresa: cliente_empresa ? cliente_empresa.trim() : null,
+        cliente_telefone: cliente_telefone ? cliente_telefone.trim() : null,
+        cliente_email: cliente_email ? cliente_email.trim() : null,
+        data_validade: data_validade || null,
+        condicao_pagto: condicao_pagto || null,
+        observacoes: observacoes || null,
+        total: parseFloat(total.toFixed(2)),
+      })
+      .select()
+      .single();
 
-    const resOrc = await client.query(
-      `INSERT INTO orcamentos
-        (numero, cliente_nome, cliente_empresa, cliente_telefone, cliente_email, data_validade, condicao_pagto, observacoes, total)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
-       RETURNING *`,
-      [numero, cliente_nome.trim(), cliente_empresa||null, cliente_telefone||null,
-       cliente_email||null, data_validade||null, condicao_pagto||null, observacoes||null, total.toFixed(2)]
-    );
+    if (orcError) throw orcError;
 
-    const orcamento = resOrc.rows[0];
+    const itemsToInsert = itens.map(item => ({
+      orcamento_id: orcData.id,
+      descricao: item.descricao.trim(),
+      quantidade: parseFloat(item.quantidade) || 1,
+      valor_unitario: parseFloat(item.valor_unitario) || 0,
+    }));
 
-    for (const item of itens) {
-      await client.query(
-        `INSERT INTO orcamento_itens (orcamento_id, descricao, quantidade, valor_unitario)
-         VALUES ($1, $2, $3, $4)`,
-        [orcamento.id, item.descricao.trim(), parseFloat(item.quantidade)||1, parseFloat(item.valor_unitario)||0]
-      );
+    const { data: itemsData, error: itemsError } = await supabase
+      .from('orcamento_itens')
+      .insert(itemsToInsert)
+      .select();
+
+    if (itemsError) {
+      await supabase.from('orcamentos').delete().eq('id', orcData.id);
+      throw itemsError;
     }
 
-    await client.query('COMMIT');
     console.log(`📋 Orçamento ${numero} criado para: ${cliente_nome}`);
-    return res.status(201).json({ sucesso: true, mensagem: 'Orçamento salvo com sucesso!', dados: orcamento });
-
+    return res.status(201).json({
+      sucesso: true,
+      mensagem: 'Orçamento salvo com sucesso!',
+      dados: {
+        ...orcData,
+        itens: itemsData,
+      },
+    });
   } catch (erro) {
-    await client.query('ROLLBACK');
-    console.error('Erro ao salvar orçamento no banco:', erro.message);
-    // Fallback em memória
+    console.warn('Erro ao salvar no Supabase, salvando em memória:', erro.message);
     const orc = store.criarOrcamento({ numero, cliente_nome, cliente_empresa, cliente_telefone, cliente_email, data_validade, condicao_pagto, observacoes, itens, total });
     return res.status(201).json({ sucesso: true, mensagem: 'Orçamento salvo com sucesso!', dados: orc });
-  } finally {
-    client.release();
   }
 };
 
-// ── Listar Orçamentos ────────────────────────────────────────
 const listarOrcamentos = async (req, res) => {
+  if (!supabase) {
+    console.warn('Supabase desabilitado, listando orçamentos da memória');
+    const dados = store.listarOrcamentos();
+    return res.status(200).json({ sucesso: true, total: dados.length, dados });
+  }
+
   try {
-    const result = await pool.query(
-      'SELECT id, numero, cliente_nome, cliente_empresa, total, status, criado_em FROM orcamentos ORDER BY criado_em DESC'
-    );
-    return res.status(200).json({ sucesso: true, total: result.rowCount, dados: result.rows });
+    const { data, error } = await supabase
+      .from('orcamentos')
+      .select('id, numero, cliente_nome, cliente_empresa, total, status, criado_em')
+      .order('criado_em', { ascending: false });
+
+    if (error) throw error;
+
+    return res.status(200).json({ sucesso: true, total: data.length, dados: data });
   } catch (erro) {
+    console.warn('Erro ao consultar Supabase, listando da memória:', erro.message);
     const dados = store.listarOrcamentos();
     return res.status(200).json({ sucesso: true, total: dados.length, dados });
   }
 };
 
-// ── Buscar Orçamento por ID ──────────────────────────────────
 const buscarOrcamentoPorId = async (req, res) => {
   const { id } = req.params;
-  try {
-    const resOrc = await pool.query('SELECT * FROM orcamentos WHERE id = $1', [id]);
-    if (resOrc.rowCount === 0) return res.status(404).json({ sucesso: false, mensagem: 'Orçamento não encontrado.' });
 
-    const resItens = await pool.query(
-      'SELECT id, descricao, quantidade, valor_unitario, valor_total FROM orcamento_itens WHERE orcamento_id = $1',
-      [id]
-    );
+  if (!supabase) {
+    console.warn('Supabase desabilitado, buscando orçamento da memória');
+    const orc = store.buscarOrcamentoPorId(Number(id));
+    if (!orc) return res.status(404).json({ sucesso: false, mensagem: 'Orçamento não encontrado.' });
+    return res.status(200).json({ sucesso: true, dados: orc });
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('orcamentos')
+      .select('*, orcamento_itens(*)')
+      .eq('id', id)
+      .single();
+
+    if (error) {
+      if (error.code === 'PGRST116') {
+        return res.status(404).json({ sucesso: false, mensagem: 'Orçamento não encontrado.' });
+      }
+      throw error;
+    }
 
     return res.status(200).json({
       sucesso: true,
-      dados: { ...resOrc.rows[0], itens: resItens.rows },
+      dados: {
+        ...data,
+        itens: data.orcamento_itens,
+      },
     });
   } catch (erro) {
+    console.warn('Erro ao buscar do Supabase, buscando da memória:', erro.message);
     const orc = store.buscarOrcamentoPorId(Number(id));
     if (!orc) return res.status(404).json({ sucesso: false, mensagem: 'Orçamento não encontrado.' });
     return res.status(200).json({ sucesso: true, dados: orc });
   }
 };
 
-// ── Atualizar Status ─────────────────────────────────────────
 const atualizarStatusOrcamento = async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
@@ -114,15 +146,34 @@ const atualizarStatusOrcamento = async (req, res) => {
     return res.status(400).json({ sucesso: false, mensagem: `Status inválido. Use: ${statusPermitidos.join(', ')}.` });
   }
 
+  if (!supabase) {
+    console.warn('Supabase desabilitado, atualizando status do orçamento em memória');
+    const orc = store.atualizarStatusOrcamento(Number(id), status);
+    if (!orc) return res.status(404).json({ sucesso: false, mensagem: 'Orçamento não encontrado.' });
+    return res.status(200).json({ sucesso: true, dados: { id: orc.id, numero: orc.numero, status: orc.status } });
+  }
+
   try {
-    const result = await pool.query(
-      'UPDATE orcamentos SET status = $1 WHERE id = $2 RETURNING id, numero, status',
-      [status, id]
-    );
-    if (result.rowCount === 0) return res.status(404).json({ sucesso: false, mensagem: 'Orçamento não encontrado.' });
-    return res.status(200).json({ sucesso: true, dados: result.rows[0] });
+    const { data, error } = await supabase
+      .from('orcamentos')
+      .update({ status })
+      .eq('id', id)
+      .select('id, numero, status')
+      .single();
+
+    if (error) {
+      if (error.code === 'PGRST116') {
+        return res.status(404).json({ sucesso: false, mensagem: 'Orçamento não encontrado.' });
+      }
+      throw error;
+    }
+
+    return res.status(200).json({ sucesso: true, dados: data });
   } catch (erro) {
-    return res.status(500).json({ sucesso: false, mensagem: 'Erro ao atualizar status.' });
+    console.warn('Erro ao atualizar status no Supabase, atualizando em memória:', erro.message);
+    const orc = store.atualizarStatusOrcamento(Number(id), status);
+    if (!orc) return res.status(404).json({ sucesso: false, mensagem: 'Orçamento não encontrado.' });
+    return res.status(200).json({ sucesso: true, dados: { id: orc.id, numero: orc.numero, status: orc.status } });
   }
 };
 
